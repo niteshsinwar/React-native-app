@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { StatusBar, StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, Modal } from 'react-native';
+import { StatusBar, View, TextInput, ScrollView, Modal } from 'react-native';
 import * as Contacts from 'expo-contacts';
+import ContactList from './components/ContactList';
+import ContactPopup from './components/ContactPopup';
+import { styles } from './components/style';
 
 export default function App() {
   const [searchText, setSearchText] = useState('');
@@ -49,23 +52,19 @@ export default function App() {
       />
 
       <ScrollView style={styles.contactsList}>
-        {filteredContacts.map((contact, index) => (
-          <TouchableOpacity key={index} onPress={() => handleContactPress(contact)}>
-            <Text>{contact.name}</Text>
-          </TouchableOpacity>
-        ))}
+        <ContactList
+          contacts={filteredContacts}
+          handleContactPress={handleContactPress}
+        />
       </ScrollView>
 
       {selectedContact && (
         <Modal animationType="slide" transparent={true}>
           <View style={styles.modalContainer}>
-            <View style={styles.popup}>
-              <Text style={styles.contactName}>{selectedContact.name}</Text>
-              <Text style={styles.contactNumber}>{selectedContact.phoneNumbers[0]?.number}</Text>
-              <TouchableOpacity style={styles.dismissButton} onPress={handleDismissPopup}>
-                <Text style={styles.dismissButtonText}>Dismiss</Text>
-              </TouchableOpacity>
-            </View>
+            <ContactPopup
+              contact={selectedContact}
+              handleDismissPopup={handleDismissPopup}
+            />
           </View>
         </Modal>
       )}
@@ -74,55 +73,3 @@ export default function App() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    paddingTop: 50,
-  },
-  searchInput: {
-    width: '100%',
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: 'gray',
-  },
-  contactsList: {
-    flex: 1,
-    width: '100%',
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  popup: {
-    backgroundColor: '#fff',
-    padding: 20,
-    borderRadius: 10,
-    alignItems: 'center',
-    elevation: 5,
-  },
-  contactName: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  contactNumber: {
-    fontSize: 16,
-    marginBottom: 20,
-  },
-  dismissButton: {
-    backgroundColor: '#ccc',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-  },
-  dismissButtonText: {
-    fontSize: 16,
-    color: 'white',
-  },
-});
