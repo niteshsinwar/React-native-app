@@ -26,11 +26,12 @@
 - Install the EAS CLI globally by running the following command:
 - `npm install -g eas-cli`
 - Configure and log in to EAS by running:
-``` eas login
+``` 
+eas login
 eas build:configure
 ```
 Make changes to the eas.json file to configure the build settings.
-``
+```
 {
   "build": {
     "preview": {
@@ -50,7 +51,7 @@ Make changes to the eas.json file to configure the build settings.
   }
 }
 
-``
+```
 - Run the following command to build the APK file:
 - `eas build -p android --profile preview`
 - Monitor the build progress and wait for it to complete. Once done, you will receive an email with a link to download the APK file.
