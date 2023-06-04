@@ -26,9 +26,9 @@
 - Install the EAS CLI globally by running the following command:
 - `npm install -g eas-cli`
 - Configure and log in to EAS by running:
-``eas login
+``` eas login
 eas build:configure
-``
+```
 Make changes to the eas.json file to configure the build settings.
 ``
 {
